@@ -235,10 +235,10 @@
             Inject an assertion that a specified operand is (or is not) equal to null.
             </summary>
             <param name="kind">Kind of assertion to be injected.</param>
-            <param name="contractInfo">ContractInfo object describing the contract function unit into which the assertion is to be injected.</param>
+            <param name="contractInfo">ContractInfo object describing the contract function moduleUnit into which the assertion is to be injected.</param>
             <param name="operand">Operand whose nullness is to be asserted.</param>
             <param name="conditionCode">Condition code specifying how the operand must be compared with null.  This must be either EQ or NE.</param>
-            <param name="insertAfterInstruction">Instruction in the contract funciton unit after which to insert the assertion.</param>
+            <param name="insertAfterInstruction">Instruction in the contract funciton moduleUnit after which to insert the assertion.</param>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Contracts.NullPointerContractAssertion.ContainsNullPointerContractAssertion(System.Collections.Generic.IList{Microsoft.VisualStudio.CodeAnalysis.Phoenix.Contracts.ContractAssertion})">
             <summary>
@@ -495,85 +495,6 @@
             Copy analysis determines which operands are simple copies of another operand.
             </remarks>
         </member>
-        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisService">
-            <summary>
-            Base class for services that provide analysis results for FunctionUnits.
-            </summary>
-            <remarks>
-            SharedAnalysisService enables a given analysis to be run only once for each
-            FunctionUnit, regardless of how many clients are using those results.  The
-            analysis is run the first time its results are requested; subsequent requests
-            return the same results.
-            </remarks>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisService.#ctor">
-            <summary>
-            Constructor for SharedAnalysisService.
-            </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisService.AddResult``1(Phx.FunctionUnit,``0)">
-            <summary>
-            Add an analysis result for the specified FunctionUnit.
-            </summary>
-            <typeparam name="TResult">Type of the SharedAnalysisResult object.</typeparam>
-            <param name="functionUnit">FunctionUnit whose analysis result is to be set.</param>
-            <param name="result">The result object to add.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisService.AddResult``2(Phx.FunctionUnit,``1,``0)">
-            <summary>
-            Add an analysis result for the specified FunctionUnit.
-            </summary>
-            <typeparam name="TResult">Type of the SharedAnalysisResult object.</typeparam>
-            <typeparam name="TSettings">Type of the settings object used to distinguish between different instances of the same analysis with different settings.</typeparam>
-            <param name="functionUnit">FunctionUnit whose analysis result is to be set.</param>
-            <param name="settings">Object that specifies settings for how this instance of the analysis is to be run.</param>
-            <param name="result">The result object to add.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisService.GetResultForFunction``1(Phx.FunctionUnit)">
-            <summary>
-            Get the analysis results for the specified FunctionUnit.
-            </summary>
-            <typeparam name="TResult">Type of the SharedAnalysisResult object.</typeparam>
-            <param name="functionUnit">FunctionUnit whose analysis result is to be retrieved.</param>
-            <returns>An object containing the results of the analysis on the specified FunctionUnit, or null if no matching result is found.</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisService.GetResultForFunction``2(Phx.FunctionUnit,``1)">
-            <summary>
-            Get the analysis results for the specified FunctionUnit.
-            </summary>
-            <typeparam name="TResult">Type of the SharedAnalysisResult object.</typeparam>
-            <typeparam name="TSettings">Type of the settings object used to distinguish between different instances of the same analysis with different settings.</typeparam>
-            <param name="functionUnit">FunctionUnit whose analysis result is to be retrieved.</param>
-            <param name="settings">Object that specifies settings for how this instance of the analysis is to be run.</param>
-            <returns>An object containing the results of the analysis on the specified FunctionUnit, or null if no matching result is found.</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedCopyAnalysis.GetResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Get the result of the copy analysis for the specified FunctionUnit.
-            </summary>
-            <param name="functionUnit">The FunctionUnit whose copy analysis result is to be retrieved.</param>
-            <returns>The copy analysis result for the specified FunctionUnit.</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisResult">
-            <summary>
-            Base class for result objects to be cached by a SharedAnalysisService.
-            </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisResult.#ctor">
-            <summary>
-            Constructor for SharedAnalysisResult.
-            </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SharedAnalysisResult.CleanupAnalysis">
-            <summary>
-            Override this method to do any necessary cleanup of the analysis result after
-            the result is no longer needed.
-            </summary>
-            <remarks>
-            An example of the kind of cleanup typically done by a SharedAnalysisResult would
-            be to delete the lattice that was used to compute the analysis results.
-            </remarks>
-        </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedDeadAnalysis">
             <summary>
             Provides the results of dead code analysis on a FunctionUnit.
@@ -584,59 +505,20 @@
             code, which will not be executed at all.
             </remarks>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedDeadAnalysis.GetResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Get the results of the dead code analysis for the specified function.
-            </summary>
-            <param name="functionUnit">FunctionUnit for which the dead code analysis results are to be retrieved.</param>
-            <returns>A DeadAnalysisResult object containing the results of the dead code analysis.</returns>
-        </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedEHAnalysis">
             <summary>
             Service that provides the EH region graph for a FunctionUnit.
             </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedEHAnalysis.GetRegionGraphForFunction(Phx.FunctionUnit)">
-            <summary>
-            Get the EH region graph for the specified FunctionUnit.
-            </summary>
-            <param name="functionUnit">The FunctionUnit whose EH region graph is to be retrieved.</param>
-            <returns>The EH region graph of the specified FunctionUnit.</returns>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedNullAnalysis">
             <summary>
             Service that provides the results of nullness analysis on a FunctionUnit.
             </summary>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedNullAnalysis.GetResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Get the results of the nullness analysis for the specified FunctionUnit.
-            </summary>
-            <param name="functionUnit">FunctionUnit whose nullness analysis result is to be retrieved.</param>
-            <returns>The results of the nullness analysis for the specified FunctionUnit.</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedNullAnalysis.GetReachabilityResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Gets the reachability results from nullness analysis for the specified FunctionUnit.
-            </summary>
-            <remarks>
-            The reachability analysis from nullness anslysis will be able to identify unreachable edges and blocks
-            due to nullness comparisons like if(x != null).
-            </remarks>
-            <param name="functionUnit">FunctionUnit whose reachability result is to be retrieved.</param>
-            <returns>The results of the nullness based reachability analysis for the specified FunctionUnit.</returns>
-        </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedParamArrayAnalysis">
             <summary>
             Service that provides information about the contents of parameter arrays.
             </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedParamArrayAnalysis.GetResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Get the results of the parameter array analysis for a specified function.
-            </summary>
-            <param name="functionUnit">The function for which the results are to be computed.</param>
-            <returns>A ParamArrayAnalysisResult object containing the results of the analysis.</returns>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedRangeAnalysis">
             <summary>
@@ -646,18 +528,10 @@
             Value range analysis computes the range of possible values for each operand.
             </remarks>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedRangeAnalysis.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ModelService)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedRangeAnalysis.#ctor">
             <summary>
             Creates a new instance of range analysis.
             </summary>
-            <param name="modelService">the model service that will provide analysis results to seed the analysis</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedRangeAnalysis.GetResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Get the result of the range analysis for the specified FunctionUnit.
-            </summary>
-            <param name="functionUnit">The FunctionUnit whose range analysis result is to be retrieved.</param>
-            <returns>The range analysis result for the specified FunctionUnit.</returns>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStateAnalysis`1">
             <summary>
@@ -665,37 +539,9 @@
             </summary>
             <typeparam name="TState">The <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.IAnalysisState`1"/> type that represents the specific state that is being tracked.</typeparam>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStateAnalysis`1.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ModelService)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStateAnalysis`1.#ctor">
             <summary>
             Constructor for <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStateAnalysis`1"/>.
-            </summary>
-            <param name="modelService">The <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ModelService"/> object that contains the models for this lattice.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStateAnalysis`1.GetResultForFunctionUnit(Phx.FunctionUnit)">
-            <summary>
-            Gets the <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StateAnalysisResult`1"/> from the lattice for the given <see cref="T:Phx.FunctionUnit"/>.
-            <para>This method is protected instead of public because rule writers should not need to know about the generic 
-            state lattice framework. Types that implement this class should create a "GetResultForFunction" method that 
-            wraps a call to this method and returns a wrapper type for the <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StateAnalysisResult`1"/> object
-            this method returns.
-            </para>
-            </summary>
-            <param name="functionUnit">The <see cref="T:Phx.FunctionUnit"/> to get analysis results for.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStateAnalysis`1.InjectExtraInputAnalysisResults(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.AnalysisResultSet,Phx.FunctionUnit)">
-            <summary>
-            Allows derived classes to inject extra <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.AnalysisResult"/> objects into the input <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.AnalysisResultSet"/>
-            that will be passed to the lattice. For example this could be used to let the lattice know about contract information
-            specifict to this analysis.
-            </summary>
-            <param name="latticeResultSet">The <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.AnalysisResultSet"/> where extra <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.AnalysisResult"/>s should be added.</param>
-            <param name="functionUnit">The <see cref="T:Phx.FunctionUnit"/> being analyzed.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStateAnalysis`1.CreateLattice(Phx.FunctionUnit)">
-            <summary>
-            <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StateLattice`1"/> is an abstract generic class so <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStateAnalysis`1"/> itself can not 
-            create one. Derived types should know the specific kind of lattice they are using and so creating the lattice is left to the 
-            derived class.
             </summary>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStringContentsAnalysis">
@@ -703,23 +549,10 @@
             Dataflow analysis service that provides string analysis that tracks the possible contents of strings. 
             </summary>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStringContentsAnalysis.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ModelService,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedNullAnalysis)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStringContentsAnalysis.#ctor">
             <summary>
             Constructor for <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStringContentsAnalysis"/>.
             </summary>
-            <param name="modelService">The <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ModelService"/> object that contains the models for this lattice.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStringContentsAnalysis.CreateLattice(Phx.FunctionUnit)">
-            <summary>
-            Creates a <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StringContentsLattice"/>.
-            </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStringContentsAnalysis.GetResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Gets the <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StringContentsAnalysisResult"/> for the given <see cref="T:Phx.FunctionUnit"/>.
-            This will run the StringContents dataflow analysis over the given function.
-            </summary>
-            <param name="functionUnit">The <see cref="T:Phx.FunctionUnit"/> to perform StringContents dataflow analysis on.</param>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StringContentsAnalysisResult">
             <summary>
@@ -755,13 +588,6 @@
             Service providing information about the possible values of strings.
             </summary>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStringValueAnalysis.GetResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Get the results of the string value analysis for a specified function.
-            </summary>
-            <param name="functionUnit">The function for which the results are to be computed.</param>
-            <returns>A StringValueAnalysisResult object containing the results of the analysis.</returns>
-        </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StringValueAnalysisResult">
             <summary>
             Base class for analysis results that provide information about the possible values of strings.
@@ -792,13 +618,6 @@
             Writable extent analysis determines the range of memory locations to which each
             pointer operand is allowed to write.
             </remarks>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedWritableExtentAnalysis.GetResultForFunction(Phx.FunctionUnit)">
-            <summary>
-            Get the result of the writable extent analysis for the specified FunctionUnit.
-            </summary>
-            <param name="functionUnit">The FunctionUnit whose writable extent analysis result is to be retrieved.</param>
-            <returns>The writable extent analysis result for the specified FunctionUnit.</returns>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StateCell`1">
             <summary>
@@ -1297,8 +1116,8 @@
             Builds the list of passes to run.
             </summary>
             <remarks>
-            This method will call the virtual methods <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateFunctionPass(Phx.Graphs.CallGraphProcessOrder)"/>,
-            <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateModulePass"/>, and <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateContractPass"/>
+            This method will call the virtual methods <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateFunctionPass(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassInfo)"/>,
+            <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreatePass(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassInfo)"/>, and <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateContractPass"/>
             to create the necessary passes.  The passes will be created in the order they are to be executed.
             </remarks>
         </member>
@@ -1314,24 +1133,18 @@
             <param name="disposing">'true' if this object is being disposed as a result of a call to <see cref="M:System.IDisposable.Dispose"/>.
             'false' if this object is being disposed from a finalizer.</param>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateFunctionPass(Phx.Graphs.CallGraphProcessOrder)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateFunctionPass(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassInfo)">
             <summary>
             Called from within <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.BuildPasses"/> to create a new pass that visits every FunctionUnit in the module.
             </summary>
-            <param name="order">Call graph order in which to visit the functions.</param>
-            <returns>A phase list that will be executed once for each FunctionUnit in the module, in the order specified by the <paramref name="order"/> parameter.</returns>
+            <param name="passInfo">PassInfo object describing the pass.</param>
+            <returns>A phase list that will be executed once for each FunctionUnit in the program.</returns>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateContractPass">
             <summary>
             Called from within <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.BuildPasses"/> to create a new pass that visits every contract in the module.
             </summary>
             <returns>A phase list that will be executed once for each contract FunctionUnit in the module.</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.CreateModulePass">
-            <summary>
-            Called from within <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.BuildPasses"/> to create a new pass that visits the module itself.
-            </summary>
-            <returns></returns>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHost.StaticInitialize">
             <summary>
@@ -1368,6 +1181,11 @@
             The host supports function contracts.  The host must override CodeAnalysisHost.CreateContractPass().
             </summary>
         </member>
+        <member name="F:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.CodeAnalysisHostFeatures.DirtyRules">
+            <summary>
+            The host supports rules that modify the IR.
+            </summary>
+        </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ContractRule">
             <summary>
             Base class for code analysis rules that validate contracts of functions.
@@ -1375,20 +1193,8 @@
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule">
             <summary>
-            Base class for implementing a Phoenix-based code analysis rule.  Do
-            not derive from this class directly.  Instead, derive from one of the
-            following classes: <see cref="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionBodyRule"/>
+            Base class for implementing a Phoenix-based code analysis rule.
             </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.CreateWarning(Phx.IR.Instruction,System.String)">
-            <summary>
-            Create a new DiagnosticMessage object to be filled in later with additional information.
-            </summary>
-            <param name="instruction">Instruction containing the defect.</param>
-            <param name="description">Description of the defect.</param>
-            <returns>A new DiagnosticMessage object.</returns>
-            <remarks>This method does not actually report the warning.  After filling in any additional information,
-            the rule should call <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarning(Phx.Logging.Diagnostics.DiagnosticMessage)"/> to report the warning.</remarks>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.GetWarningInfo">
             <summary>
@@ -1405,12 +1211,6 @@
             <param name="ruleId">Unique identifier of the rule whose DiagnosticInfo is to be retrieved.  This is the same string
             specified as the value of the RuleId property on the BaseRuleAttribute.</param>
             <returns>The DiagnosticInfo object representing the specified warning implemented by this rule object.</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarning(Phx.Logging.Diagnostics.DiagnosticMessage)">
-            <summary>
-            Report a warning using a DiagnosticMessage previously created by <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.CreateWarning(Phx.IR.Instruction,System.String)"/>.
-            </summary>
-            <param name="message">The DiagnosticMessage object containing the information about the warning.</param>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportLocalizedWarning(Phx.IR.Instruction,System.Object[])">
             <summary>
@@ -1433,56 +1233,29 @@
             <param name="sourceContext">SourceContext of the location of the defect.</param>
             <param name="resolutionArguments">Format arguments to substitute into the format string.</param>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportLocalizedWarningWithResolution(Phx.IR.Instruction,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.RuleViolationInfo,System.Object[])">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportLocalizedWarningWithResolution(Phx.IR.Instruction,System.String,System.String,System.Object[])">
             <summary>
-            Report a localized warning on a specific instruction.
+            Report a localized warning.
             </summary>
             <param name="instruction">Instruction containing the defect.</param>
             <param name="ruleViolationInfo">Object that provides extra information about this violation.</param>
             <param name="resolutionArguments">Format arguments to substitute into the format string.</param>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportLocalizedWarningWithResolution(Phx.Symbols.Symbol,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.RuleViolationInfo,System.Object[])">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportLocalizedWarningWithResolution(Phx.Symbols.Symbol,System.String,System.String,System.Object[])">
             <summary>
-            Report a localized warning on a specific symbol.
+            Report a localized warning.
             </summary>
             <param name="symbol">Symbol containing the defect.</param>
             <param name="ruleViolationInfo">Object that provides extra information about this violation.</param>
             <param name="resolutionArguments">Format arguments to substitute into the format string.</param>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportLocalizedWarningWithResolution(Phx.Debug.SourceContext,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.RuleViolationInfo,System.Object[])">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportLocalizedWarningWithResolution(Phx.Debug.SourceContext,System.String,System.String,System.Object[])">
             <summary>
             Report a localized warning.
             </summary>
             <param name="sourceContext">SourceContext of the location of the defect.</param>
             <param name="ruleViolationInfo">Object that provides extra information about this violation.</param>
             <param name="resolutionArguments">Format arguments to substitute into the format string.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarning(Phx.IR.Instruction,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.RuleViolationInfo,System.String,System.Object[])">
-            <summary>
-            Report a warning on a specific instruction.
-            </summary>
-            <param name="instruction">Instruction containing the defect.</param>
-            <param name="ruleViolationInfo">Object that provides extra information about this violation.</param>
-            <param name="resolutionDescription">Format string for the description of the defect.</param>
-            <param name="resolutionArguments">Format arguments to substitute into the resolution description format string.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarning(Phx.Symbols.Symbol,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.RuleViolationInfo,System.String,System.Object[])">
-            <summary>
-            Report a warning on a specific symbol.
-            </summary>
-            <param name="symbol">Symbol containing the defect.</param>
-            <param name="ruleViolationInfo">Object that provides extra information about this violation.</param>
-            <param name="resolutionDescription">Format string for the description of the defect.</param>
-            <param name="resolutionArguments">Format arguments to substitute into the resolution description format string.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarning(Phx.Debug.SourceContext,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.RuleViolationInfo,System.String,System.Object[])">
-            <summary>
-            Report a warning.
-            </summary>
-            <param name="sourceContext">SourceContext of the location of the defect.</param>
-            <param name="ruleViolationInfo">Object that provides extra information about this violation.</param>
-            <param name="resolutionDescription">Format string for the description of the defect.</param>
-            <param name="resolutionArguments">Format arguments to substitute into the resolution description format string.</param>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarning(Phx.IR.Instruction,System.String,System.Object[])">
             <summary>
@@ -1508,6 +1281,30 @@
             <param name="resolutionDescription">Format string for the description of the defect.</param>
             <param name="resolutionArguments">Format arguments to substitute into the resolution description format string.</param>
         </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarningWithResolution(Phx.IR.Instruction,System.String,System.String,System.String,System.Object[])">
+            <summary>
+            Report a warning on a specific instruction.
+            </summary>
+            <param name="instruction">Instruction containing the defect.</param>
+            <param name="resolutionDescription">Format string for the description of the defect.</param>
+            <param name="resolutionArguments">Format arguments to substitute into the resolution description format string.</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarningWithResolution(Phx.Symbols.Symbol,System.String,System.String,System.String,System.Object[])">
+            <summary>
+            Report a warning on a specific symbol.
+            </summary>
+            <param name="symbol">Symbol containing the defect.</param>
+            <param name="resolutionDescription">Format string for the description of the defect.</param>
+            <param name="resolutionArguments">Format arguments to substitute into the resolution description format string.</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.ReportWarningWithResolution(Phx.Debug.SourceContext,System.String,System.String,System.String,System.Object[])">
+            <summary>
+            Report a warning.
+            </summary>
+            <param name="sourceContext">SourceContext of the location of the defect.</param>
+            <param name="resolutionDescription">Format string for the description of the defect.</param>
+            <param name="resolutionArguments">Format arguments to substitute into the resolution description format string.</param>
+        </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.Dispose">
             <summary>
             Frees any resources owned by this rule.
@@ -1519,12 +1316,6 @@
             </summary>
             <param name="disposing">'true' if this object is being disposed as a result of a call to <see cref="M:System.IDisposable.Dispose"/>.
             'false' if this object is being disposed from a finalizer.</param>
-        </member>
-        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PhoenixRule.StateOfFunction">
-            <summary>
-            Property that defines if this rule is Dataflow or not.
-            By default a rule is Dataflow rule.
-            </summary>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ContractRule.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Contracts.ContractService)">
             <summary>
@@ -1548,50 +1339,139 @@
             <param name="contractAssertions">List of contract assertions associated with the edge.</param>
             <param name="context">Context in which the postcondition is evaluated.</param>
         </member>
-        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionBodyRule">
+        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionPass`1">
             <summary>
-            Base class for code analysis rules that analyze the implementations of functions.
+            Base class for all passes that execute tasks on FunctionUnits.
+            </summary>
+            <typeparam name="TUnit">The type of unit the pass processes.</typeparam>
+        </member>
+        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`3">
+            <summary>
+            Base class for all passes that execute tasks in parallel.
+            </summary>
+            <typeparam name="TUnit">The type of unit the pass processes.</typeparam>
+            <typeparam name="TTarget">The type of target on which the pass runs tasks.</typeparam>
+            <typeparam name="TTargetKey">The key type used to refer to discardable targets.</typeparam>
+        </member>
+        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.TaskPass`1">
+            <summary>
+            Base class for all passes that execute tasks.
+            </summary>
+            <typeparam name="TUnit">The type of unit the pass processes.</typeparam>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.TaskPass`1.#ctor(Phx.Passes.PassConfiguration,Phx.Graphs.CallGraphProcessOrder,System.String,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassInfo)">
+            <summary>
+            Constructor for TaskPass.
+            </summary>
+            <param name="passConfiguration">The PassConfiguration for the new pass.</param>
+            <param name="order">The order in which the pass visits the call graph. If the pass does not visit FunctionUnits, then
+            this parameter should be CallGraphProcessOrder.None.</param>
+            <param name="passName">The name of the new pass.</param>
+            <param name="passInfo">PassInfo object describing the new pass.</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.TaskPass`1.ShouldExecute(`0)">
+            <summary>
+            Override this method to determine if the pass should execute on the specified unit.
+            </summary>
+            <param name="unit">The unit on which to execute.</param>
+            <returns>'true' if the pass should execute on the specified unit.</returns>
+            <remarks>The default implementation of this method always returns 'true'.</remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.TaskPass`1.Execute(`0,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassContext)">
+            <summary>
+            Override this method to implement the actual work to be done by the task.
+            </summary>
+            <param name="moduleUnit">The unit on which to execute.</param>
+            <param name="passContext">The PassContext describing the pass to be executed.</param>
+        </member>
+        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.TaskPass`1.PassInfo">
+            <summary>
+            PassInfo object describing the pass.
             </summary>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionBodyRule.#ctor">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`3.#ctor(Phx.Passes.PassConfiguration,Phx.Graphs.CallGraphProcessOrder,System.String,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassInfo,System.Object)">
             <summary>
-            Constructor for FunctionBodyRule.
+            Constructor for ParallelPass.
             </summary>
+            <param name="passConfiguration">The PassConfiguration for the new pass.</param>
+            <param name="order">The order in which the pass visits the call graph. If the pass does not visit FunctionUnits, then
+            this parameter should be CallGraphProcessOrder.None.</param>
+            <param name="passName">The name of the new pass.</param>
+            <param name="passInfo">PassInfo object describing the new pass.</param>
+            <param name="taskScheduler">The task scheduler to use to schedule the tasks.</param>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionBodyRule.AnalyzeFunction(Phx.FunctionUnit)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`3.GetTargetKeys(`0)">
             <summary>
-            Override this method to implement the analysis of this rule.
+            Override this method to provide the list of keys for the targets on which to run the tasks.
             </summary>
-            <param name="functionUnit">FunctionUnit to be analyzed.</param>
+            <param name="unit">The unit on which the pass is executing.</param>
+            <returns>A list of target keys identifying the targets on which the pass should run tasks.</returns>
+            <remarks>The returned list must be sorted such that the key for any given target appears
+            in the list before the key for any target that depends on the first target.</remarks>
         </member>
-        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionCallRule">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`3.GetTarget(`2)">
             <summary>
-            Base class for code analysis rules that analyze calls to functions.
+            Override this method to return the actual target for a specified target key.
             </summary>
+            <param name="targetKey">The key of the target to be returned.</param>
+            <returns>The target to which the key refers.</returns>
+            <remarks>The ReleaseTarget method will be called on each target returned by the GetTarget method,
+            to allow the pass to clean up or discard any resources allocated for the target.</remarks>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionCallRule.#ctor(System.Boolean)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`3.ReleaseTarget(`1)">
             <summary>
-            Constructor for FunctionCallRule.
+            Override this method to release resources for a target previously returned from GetTarget.
             </summary>
-            <param name="doFiltering">Set to 'true' to indicate that the <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionCallRule.ShouldAnalyzeCall(Phx.Symbols.FunctionSymbol)"/> method should be called
-            to decide whether or not to analyze calls to a particular function.</param>
+            <param name="target">The target whose resources are to be released.</param>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionCallRule.AnalyzeCall(Phx.IR.CallInstruction)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`3.AnalyzeTarget(`1,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.TargetContext)">
             <summary>
-            Override this method to analyze a function call.
+            Override this method to execute tasks on the specified target.
             </summary>
-            <param name="callInstruction">CallInstruction representing the call to be analyzed.</param>
-            <remarks>If filtering is enabled for this rule (see <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionCallRule.#ctor(System.Boolean)"/>), this method will only
-            be invoked for calls to FunctionSymbols for which <see cref="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionCallRule.ShouldAnalyzeCall(Phx.Symbols.FunctionSymbol)"/> returned 'true'.</remarks>
+            <param name="target">The target on which to execute the tasks</param>
+            <param name="targetContext">TargetContext describing the target.</param>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionCallRule.ShouldAnalyzeCall(Phx.Symbols.FunctionSymbol)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`3.GetTargetHashCode(`2)">
             <summary>
-            Override this method to decide whether or not to analyze calls to a particular function.
+            Override this method to provide a custom hash code for a target key.
             </summary>
-            <param name="functionSymbol">FunctionSymbol for which to filter.</param>
-            <returns>'true' if all calls to the specified function should be analyzed, or 'false' if no calls to the specified function
-            should be analyzed.</returns>
-            <remarks>This function must return the same value every time it is invoked with the same <paramref name="functionSymbol"/> argument.</remarks>
+            <param name="targetKey">The target key whose hash code is to be returned.</param>
+            <returns>The hash code of the target key.</returns>
+            <remarks>The default implementation calls Object.GetHashCode on the target key.</remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`3.GetDependencies(`2,System.Collections.Generic.IList{`2})">
+            <summary>
+            Override this method to provide the list of targets which must be analyzed before the
+            specified target.
+            </summary>
+            <param name="targetKey">The key of the target whose dependencies are to be computed.</param>
+            <param name="dependencies">List to be populated with the keys of the targets on which
+            <paramref name="targetKey"/> depends.</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionPass`1.#ctor(Phx.Passes.PassConfiguration,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassInfo,System.Object,Phx.Phases.PhaseList)">
+            <summary>
+            Constructor for ParallelPass.
+            </summary>
+            <param name="passConfiguration">The PassConfiguration for the new pass.</param>
+            <param name="passInfo">PassInfo object describing the new pass.</param>
+            <param name="taskScheduler">The task scheduler to use to schedule the tasks.</param>
+            <param name="phaseList">The phase list to execute on each FunctionUnit.</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionPass`1.IsFunctionUnitAvailable(Phx.Symbols.FunctionSymbol)">
+            <summary>
+            Override this method to determine whether the FunctionUnit for the specified
+            function is available for analysis.
+            </summary>
+            <param name="functionSymbol">The symbol of the function.</param>
+            <returns>'true' if the function's FunctionUnit can be analyzed by this pass.</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionPassOrderGraph">
+            <summary>
+            Graph used to determine the order that each pass visits the assembly's FunctionUnits.  The program's CallGraph
+            is not sufficient for this because it has no way of enforcing the correct ordering of uninstantiated generics
+            without explicitly adding edges to create the appropriate dependency.  This modification is done here rather
+            that modifying the CallGraph.
+            </summary>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FxCopRuleAttribute">
             <summary>
@@ -1699,17 +1579,6 @@
             Base class for implementing a Phoenix-base code analysis model.
             </summary>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.Model.GetAnalysisResultsForFunction(Phx.FunctionUnit,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.AnalysisResultSet)">
-            <summary>
-            Override this method to provide an AnalysisResultSet modeling the behavior of the callers and callees of a function.
-            </summary>
-            <param name="functionUnit">FunctionUnit whose callers and callees are to be modeled.</param>
-            <param name="inputResults">AnalysisResultSet specifying any information that is already known
-            about the behavior of the function.  The model can use this result set to produce more precise
-            information about the behavior of the function.</param>
-            <returns>An AnalysisResultSet object that models the behavior of the callers and callees of
-            <paramref name="functionUnit"/>.</returns>
-        </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.Model.InstrumentFunction(Phx.FunctionUnit)">
             <summary>
             Override this method to modify the IR of a function to provide additional information about its behavior.
@@ -1720,7 +1589,7 @@
             <summary>
             Override this method to modify the IR of a contract function to provide additional preconditions and postconditions.
             </summary>
-            <param name="contractInfo">ContractInfo describing the contract function unit.</param>
+            <param name="contractInfo">ContractInfo describing the contract function moduleUnit.</param>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.Model.GetInferenceOperators(Phx.Graphs.BasicBlock)">
             <summary>
@@ -1791,18 +1660,6 @@
             Service that provides access to models for the behavior of functions.
             </summary>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ModelService.GetAnalysisResultsForFunction(Phx.FunctionUnit,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.AnalysisResultSet)">
-            <summary>
-            Get an AnalysisResultSet that models the behavior of the callers and callees of a
-            function.
-            </summary>
-            <param name="functionUnit">FunctionUnit whose callers and callees are to be modeled.</param>
-            <param name="inputResults">AnalysisResultSet specifying any information that is already known
-            about the behavior of the function.  The model can use this result set to produce more precise
-            information about the behavior of the function.</param>
-            <returns>An AnalysisResultSet object that models the behavior of the callers and callees of
-            <paramref name="functionUnit"/>.</returns>
-        </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.NativeRuleAttribute">
             <summary>
             Attribute class that marks a class as implementing a Phoenix-based
@@ -1845,6 +1702,34 @@
             <summary>
             The unique identifier of the analyzer that implements the rule.
             </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`2">
+            <summary>
+            Base class for all passes that execute tasks in parallel.
+            </summary>
+            <typeparam name="TUnit">The type of unit the pass processes.</typeparam>
+            <typeparam name="TTarget">The type of target on which the pass runs tasks.</typeparam>
+            <remarks>This version of ParallelPass is used for the common case where the target key is the
+            target itself.</remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ParallelPass`2.#ctor(Phx.Passes.PassConfiguration,Phx.Graphs.CallGraphProcessOrder,System.String,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassInfo,System.Object)">
+            <summary>
+            Constructor for ParallelPass.
+            </summary>
+            <param name="passConfiguration">The PassConfiguration for the new pass.</param>
+            <param name="order">The order in which the pass visits the call graph. If the pass does not visit FunctionUnits, then
+            this parameter should be CallGraphProcessOrder.None.</param>
+            <param name="passName">The name of the new pass.</param>
+            <param name="passInfo">PassInfo object describing the new pass.</param>
+            <param name="taskScheduler">The task scheduler to use to schedule the tasks.</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.PassOrder">
+            <summary>
+            This class stores information about pass order.
+            </summary>
+            <remarks>
+            This class is immutable. Code which uses this class expects that it is immutable.
+            </remarks>
         </member>
         <!-- Badly formed XML comment ignored for member "M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.RenameOptimizationPhase.RenameOptimizationWithOperandTracking.ReplaceOneOccurrence(Phx.IR.Operand,Phx.IR.Operand)" -->
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.FunctionState">
@@ -1911,21 +1796,13 @@
             Service that allows components to track statistics.
             </summary>
         </member>
-        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SymbolRule">
+        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.TargetState">
             <summary>
-            Base class for code analysis rules that analyze symbols.
+            This class stores information about target state.
             </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SymbolRule.#ctor">
-            <summary>
-            Constructor for SymbolRule.
-            </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.SymbolRule.AnalyzeSymbol(Phx.Symbols.Symbol)">
-            <summary>
-            Override this method to analyze a symbol.
-            </summary>
-            <param name="symbol">The symbol to be analyzed.</param>
+            <remarks>
+            This class is immutable. Code which uses this class expects that it is immutable.
+            </remarks>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.UtilityExtensionAttribute">
             <summary>
@@ -1940,6 +1817,37 @@
             <param name="discovery">Discovery object used to load this utility's metadata.</param>
             <param name="utilityAttribute">The attribute containing the metadata for the utility.</param>
             <param name="implementationType">The type that implements the utility.</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ViolationMessage.GetRelevantLines">
+            <summary>
+            Returns the 'Lines:' string that should be appended to the end of a violation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ViolationMessage.ResolutionId">
+            <summary>
+            ResolutionId of the resolution to be emitted.  This may be null if the specified rule only implements one resolution.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ViolationMessage.MessageId">
+            <summary>
+            Unique identifier used to differentiate between violations from the same rule on the same code element.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ViolationMessage.RelevantLines">
+            <summary>
+            Will append a ": Lines:" string followed by a comma separated list of the lines you specified to the end of your 
+            resolution and will cause VS to highlight those lines when this violation is selected from the error list.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ViolationMessage.FixCategory">
+            <summary>
+            Indicates the kind of fix required to fix this violation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Extensibility.ViolationMessage.MessageLevel">
+            <summary>
+            Indicates the severity of the violation.
+            </summary>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Inference.BranchOnLocalComparePattern">
             <summary>
@@ -3810,12 +3718,12 @@
             <param name="node">The Phoenix object to get the display name for.</param>
             <returns><paramref name="node"/>'s display name.</returns>
         </member>
-        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatter.SharedCopyAnalysis">
+        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatter.CopyAnalysisResult">
             <summary>
             Shared copy analysis object for use by this expression formatter.
             </summary>
         </member>
-        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatter.SharedParamArrayAnalysis">
+        <member name="P:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatter.ParamArrayAnalysisResult">
             <summary>
             Shared param array analysis object for use by this expression formatter.
             </summary>
@@ -3877,7 +3785,7 @@
             <param name="node">The Phoenix object to get the display name for.</param>
             <returns><paramref name="node"/>'s display name.</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.CPlusPlusExpressionFormatter.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedParamArrayAnalysis,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedCopyAnalysis)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.CPlusPlusExpressionFormatter.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.ParamArrayAnalysisResult,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedCopyAnalysisResult)">
             <summary>
             Primary constructor for a CPlusPlusExpressionFormatter.
             </summary>
@@ -4213,7 +4121,7 @@
             <param name="formatProvider">An IFormatProvider to use in formatting the expression.</param>
             <returns>The formatted argument.</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.CSharpExpressionFormatter.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedParamArrayAnalysis,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedCopyAnalysis,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedStringValueAnalysis)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.CSharpExpressionFormatter.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.ParamArrayAnalysisResult,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedCopyAnalysisResult,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.StringValueAnalysisResult)">
             <summary>
             Primary constructor for a CSharpExpressionFormatter.
             </summary>
@@ -4491,51 +4399,15 @@
             </summary>
             <remarks>Will not throw exceptions.</remarks>
         </member>
-        <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatterComponent">
-            <summary>
-            A component for accessing expression formatters by source language.
-            </summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatterComponent.GetExpressionFormatter(Microsoft.VisualStudio.CodeAnalysis.SourceLanguage)">
-            <summary>
-            Gets an expression formatter for a particular source language.
-            </summary>
-            <param name="sourceLanguage">The source language to format expressions in.</param>
-            <returns>An expression formatter for the given language.</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatterComponent.GetExpressionFormatter(Phx.PEModuleUnit)">
-            <summary>
-            Gets an expression formatter for the particular language that <paramref name="moduleUnit"/> is written in."
-            </summary>
-            <param name="moduleUnit">The <see cref="T:Phx.PEModuleUnit"/> that contains the expressions that are going to be formatted.</param>
-            <returns>An expression formatter for the language used in <paramref name="moduleUnit"/>.</returns>
-        </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatterService">
             <summary>
             A service for accessing expression formatters by source language.
             </summary>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatterService.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.CSharpExpressionFormatter,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.CPlusPlusExpressionFormatter,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.VisualBasicExpressionFormatter)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatterService.#ctor">
             <summary>
-            Constructor for the ExpressionFormatterService.  Takes a formatter for each language we can format.
+            Constructor for the ExpressionFormatterService.
             </summary>
-            <param name="cSharpExpressionFormatter">The formatter to use for C#.</param>
-            <param name="cPlusPlusExpressionFormatter">The formatter to use for C++.</param>
-            <param name="visualBasicExpressionFormatter">The formatter to use for Visual Basic.</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatterService.GetExpressionFormatter(Microsoft.VisualStudio.CodeAnalysis.SourceLanguage)">
-            <summary>
-            Gets an expression formatter for a particular source language.
-            </summary>
-            <param name="sourceLanguage">The source language to format expressions in.</param>
-            <returns>An expression formatter for the given language.</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionFormatterService.GetExpressionFormatter(Phx.PEModuleUnit)">
-            <summary>
-            Gets an expression formatter for the particular language that <paramref name="moduleUnit"/> is written in."
-            </summary>
-            <param name="expression">The <see cref="T:Phx.PEModuleUnit"/> that contains the expressions that are going to be formatted.</param>
-            <returns>An expression formatter for the language used in <paramref name="moduleUnit"/>.</returns>
         </member>
         <member name="T:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ExpressionUtilities">
             <summary>
@@ -4791,8 +4663,8 @@
                 The <see cref="T:Phx.Symbols.FunctionSymbol"/> of method whose anonymous methods will be returned.
             </param>
             <returns>
-                A <see cref="T:System.Collections.Generic.ICollection`1"/> containing the anonymous method <see cref="T:Phx.Symbols.FunctionSymbol"/>s 
-                of <paramref name="declaringMethod"/> or <see langword="null"/> if 
+                A <see cref="T:System.Collections.Generic.IList`1"/> containing the anonymous methods <see cref="T:Phx.Symbols.FunctionSymbol"/>s 
+                of <paramref name="declaringMethod"/> or an empty list if 
                 <paramref name="declaringMethod"/> does not have any anonymous methods.
             </returns>
         </member>
@@ -4879,10 +4751,10 @@
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.ModuleUnitExtensions.GetSourceLanguage(Phx.ModuleUnit)">
             <summary>
-            Gets the language that the module unit is written in.
+            Gets the language that the module moduleUnit is written in.
             </summary>
-            <param name="moduleUnit">The module unit whose language is desired.</param>
-            <returns>The SourceLanguage that the module unit is written in.</returns>
+            <param name="moduleUnit">The module moduleUnit whose language is desired.</param>
+            <returns>The SourceLanguage that the module moduleUnit is written in.</returns>
             <remarks>If pdbs are missing, the source language will be computed using the contents of the module.
             In some cases the result of the computation may be incorrect.</remarks>
         </member>
@@ -5039,6 +4911,14 @@
             </summary>
             <param name="operand">The operand to test.</param>
             <returns>If the operand is the definition of a parameter, returns the <see cref="T:Phx.Symbols.ParameterSymbol"/>.
+            of the parameter being defined.  Otherwise, returns null.</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.OperandExtensions.GetDefinedParameterIndex(Phx.IR.Operand)">
+            <summary>
+            Gets the index of the parameter that this operand defines, if any.
+            </summary>
+            <param name="operand">The operand to test.</param>
+            <returns>If the operand is the definition of a parameter, returns the index.
             of the parameter being defined.  Otherwise, returns null.</returns>
         </member>
         <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.OperandExtensions.IsNullPtr(Phx.IR.Operand)">
@@ -5435,7 +5315,7 @@
             <param name="node">The Phoenix object to get the display name for.</param>
             <returns><paramref name="node"/>'s display name.</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.VisualBasicExpressionFormatter.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedParamArrayAnalysis,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedCopyAnalysis)">
+        <member name="M:Microsoft.VisualStudio.CodeAnalysis.Phoenix.Utilities.VisualBasicExpressionFormatter.#ctor(Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.ParamArrayAnalysisResult,Microsoft.VisualStudio.CodeAnalysis.Phoenix.Dataflow.SharedCopyAnalysisResult)">
             <summary>
             Primary constructor for a CSharpExpressionFormatter.
             </summary>
