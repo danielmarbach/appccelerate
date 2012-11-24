@@ -43,4 +43,26 @@ namespace Appccelerate.Bootstrapper.Specification
             Second = new SecondExtension();
         };
     }
+
+    public class BootstrapperNewSyntaxSpecification
+    {
+        protected const string Concern = "Bootstrapping with new syntax";
+
+        protected static CustomExtensionStrategy Strategy;
+
+        protected static CustomExtensionBase First;
+
+        protected static CustomExtensionBase Second;
+
+        protected static IBootstrapper<ICustomExtension> Bootstrapper;
+
+        Establish context = () =>
+        {
+            Bootstrapper = new DefaultBootstrapper<ICustomExtension>();
+
+            Strategy = new CustomExtensionStrategy();
+            First = new FirstExtension();
+            Second = new SecondExtension();
+        };
+    }
 }

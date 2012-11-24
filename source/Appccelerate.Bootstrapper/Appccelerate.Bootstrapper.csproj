@@ -22,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractStrategy.cs" />
+    <Compile Include="AbstractStrategyWithNewSyntax.cs" />
     <Compile Include="Behavior\DisposeExtensionBehavior.cs" />
     <Compile Include="Behavior\LazyBehavior.cs" />
     <Compile Include="BootstrapperException.cs" />
@@ -88,6 +89,8 @@
     <Compile Include="Syntax\IExecutableFactory.cs" />
     <Compile Include="Syntax\ISyntax.cs" />
     <Compile Include="Syntax\ISyntaxBuilder.cs" />
+    <Compile Include="Syntax\ISyntaxBuilderNew.cs" />
+    <Compile Include="Syntax\ISyntaxNew.cs" />
     <Compile Include="Syntax\SyntaxBuilder.cs" />
     <Compile Include="Syntax\SyntaxBuilderWithContext.cs" />
   </ItemGroup>

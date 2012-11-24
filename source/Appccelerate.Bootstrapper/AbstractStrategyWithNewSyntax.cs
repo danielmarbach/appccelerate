@@ -1,21 +1,3 @@
-//-------------------------------------------------------------------------------
-// <copyright file="AbstractStrategy.cs" company="Appccelerate">
-//   Copyright (c) 2008-2012
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
-// </copyright>
-//-------------------------------------------------------------------------------
-
 namespace Appccelerate.Bootstrapper
 {
     using System;
@@ -25,45 +7,41 @@ namespace Appccelerate.Bootstrapper
     using Appccelerate.Bootstrapper.Reporting;
     using Appccelerate.Bootstrapper.Syntax;
 
-    /// <summary>
-    /// Abstract strategy definition.
-    /// </summary>
-    /// <typeparam name="TExtension">The type of the extension.</typeparam>
-    public abstract class AbstractStrategy<TExtension> : IStrategy<TExtension>
+    public abstract class AbstractStrategyWithNewSyntax<TExtension> : IStrategy<TExtension>
         where TExtension : IExtension
     {
-        private readonly ISyntaxBuilder<TExtension> runSyntaxBuilder;
+        private readonly ISyntaxBuilderNew<TExtension> runSyntaxBuilder;
 
-        private readonly ISyntaxBuilder<TExtension> shutdownSyntaxBuilder;
+        private readonly ISyntaxBuilderNew<TExtension> shutdownSyntaxBuilder;
 
         private bool runSyntaxBuilded;
 
         private bool shutdownSyntaxBuilded;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractStrategy&lt;TExtension&gt;"/> class.
+        /// Initializes a new instance of the <see cref="AbstractStrategyWithNewSyntax&lt;TExtension&gt;"/> class.
         /// </summary>
         /// <remarks>Uses the default syntax builder.</remarks>
-        protected AbstractStrategy()
-            : this(new SyntaxBuilder<TExtension>(new ExecutableFactory<TExtension>()), new SyntaxBuilder<TExtension>(new ExecutableFactory<TExtension>()))
+        protected AbstractStrategyWithNewSyntax()
+            : this(null /*new SyntaxBuilderNew<TExtension>(new ExecutableFactory<TExtension>())*/, null /* new SyntaxBuilderNew<TExtension>(new ExecutableFactory<TExtension>())*/)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractStrategy&lt;TExtension&gt;"/> class.
+        /// Initializes a new instance of the <see cref="AbstractStrategyWithNewSyntax&lt;TExtension&gt;"/> class.
         /// </summary>
         /// <param name="runSyntaxBuilder">The run syntax builder.</param>
         /// <param name="shutdownSyntaxBuilder">The shutdown syntax builder.</param>
-        protected AbstractStrategy(ISyntaxBuilder<TExtension> runSyntaxBuilder, ISyntaxBuilder<TExtension> shutdownSyntaxBuilder)
+        protected AbstractStrategyWithNewSyntax(ISyntaxBuilderNew<TExtension> runSyntaxBuilder, ISyntaxBuilderNew<TExtension> shutdownSyntaxBuilder)
         {
             this.shutdownSyntaxBuilder = shutdownSyntaxBuilder;
             this.runSyntaxBuilder = runSyntaxBuilder;
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="AbstractStrategy{TExtension}"/> class.
+        /// Finalizes an instance of the <see cref="AbstractStrategyWithNewSyntax{TExtension}"/> class.
         /// </summary>
-        ~AbstractStrategy()
+        ~AbstractStrategyWithNewSyntax()
         {
             this.Dispose(false);
         }
@@ -148,13 +126,13 @@ namespace Appccelerate.Bootstrapper
         /// Fluently defines the run syntax on the specified builder.
         /// </summary>
         /// <param name="builder">The syntax builder</param>
-        protected abstract void DefineRunSyntax(ISyntaxBuilder<TExtension> builder);
+        protected abstract void DefineRunSyntax(ISyntaxBuilderNew<TExtension> builder);
 
         /// <summary>
         /// Fluently defines the shutdown syntax on the specified builder.
         /// </summary>
         /// <param name="builder">The syntax builder</param>
-        protected abstract void DefineShutdownSyntax(ISyntaxBuilder<TExtension> builder);
+        protected abstract void DefineShutdownSyntax(ISyntaxBuilderNew<TExtension> builder);
 
         private void CheckRunSyntaxNotAlreadyBuilt()
         {

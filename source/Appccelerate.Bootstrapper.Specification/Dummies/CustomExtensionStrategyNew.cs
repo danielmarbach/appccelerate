@@ -1,32 +1,15 @@
-//-------------------------------------------------------------------------------
-// <copyright file="CustomExtensionStrategy.cs" company="Appccelerate">
-//   Copyright (c) 2008-2012
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
-// </copyright>
-//-------------------------------------------------------------------------------
-
 namespace Appccelerate.Bootstrapper.Specification.Dummies
 {
     using System.Collections.Generic;
 
     using Appccelerate.Bootstrapper.Syntax;
 
-    public class CustomExtensionStrategy : AbstractStrategy<ICustomExtension>
+    public class CustomExtensionStrategyNew : AbstractStrategyWithNewSyntax<ICustomExtension>
     {
         public int RunConfigurationInitializerAccessCounter
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public int ShutdownConfigurationInitializerAccessCounter
@@ -35,7 +18,7 @@ namespace Appccelerate.Bootstrapper.Specification.Dummies
             private set;
         }
 
-        protected override void DefineRunSyntax(ISyntaxBuilder<ICustomExtension> builder)
+        protected override void DefineRunSyntax(ISyntaxBuilderNew<ICustomExtension> builder)
         {
             builder
                 .Execute(() => CustomExtensionBase.DumpAction("CustomRun"))
@@ -45,7 +28,7 @@ namespace Appccelerate.Bootstrapper.Specification.Dummies
                 .Execute(() => "RunTest", (extension, ctx) => extension.Register(ctx));
         }
 
-        protected override void DefineShutdownSyntax(ISyntaxBuilder<ICustomExtension> syntax)
+        protected override void DefineShutdownSyntax(ISyntaxBuilderNew<ICustomExtension> syntax)
         {
             syntax
                 .Execute(() => CustomExtensionBase.DumpAction("CustomShutdown"))
